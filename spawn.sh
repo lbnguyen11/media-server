@@ -17,15 +17,8 @@ shopt -s extdebug # necessary for the DEBUG trap to carry into functions
 # BASH_XTRACEFD=3
 # set -x
 
-#run Debug build:
-#echo "[INFO] Start Debug build!"
-#cmake -B build/Debug -DCMAKE_BUILD_TYPE=Debug
-#cmake --build build/Debug
-
-#run Release build:
-RELEASE_DIR=build/Release/bin
-RELEASE_BIN=file_server
-echo "[INFO](BEG) Run Release build!"
-cd ${RELEASE_DIR} || exit
-./${RELEASE_BIN} "$@" 2>&1
-echo "[INFO](END) Run Release build!"
+for i in $(seq 1 20);
+do
+  firefox --private http://0.0.0.0:8080/sample.mp4 &
+  sleep 1
+done
