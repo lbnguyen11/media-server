@@ -17,14 +17,14 @@ shopt -s extdebug # necessary for the DEBUG trap to carry into functions
 # BASH_XTRACEFD=3
 # set -x
 
-#Debug build:
-echo "[INFO](BEG) Start Debug build!"
-cmake -B build/Debug -DCMAKE_BUILD_TYPE=Debug
-cmake --build build/Debug
-echo "[INFO](END) Start Debug build!"
+# #Debug build:
+# echo "[INFO](BEG) Start Debug build!"
+# cmake -B build/Debug -DCMAKE_BUILD_TYPE=Debug
+# cmake --build build/Debug
+# echo "[INFO](END) Start Debug build!"
 
 #Release build:
 echo "[INFO](BEG) Start Release build!"
 cmake -B build/Release -DCMAKE_BUILD_TYPE=Release
 cmake --build build/Release
-echo "[INFO](END) Start Release build!"
+# echo "[INFO](END) Start Release build!"

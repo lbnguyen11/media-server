@@ -17,8 +17,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 # Enable folders in IDEs like VS or Xcode
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# Find Boost
+# Find libraries
 find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(spdlog REQUIRED)
 
 # Add executable
 add_executable(file_server
@@ -28,11 +29,12 @@ add_executable(file_server
 
 # Link Boost
 target_link_libraries(file_server PRIVATE Boost::system Boost::thread)
+target_link_libraries(file_server PRIVATE spdlog::spdlog_header_only)
 
 # Set compile options
 target_compile_options(file_server PRIVATE
-    $<$<CONFIG:Debug>:-g -O0>
-    $<$<CONFIG:Release>:-O3 -DNDEBUG>
+    $<$<CONFIG:Debug>:-g -O0 -Wall>
+    $<$<CONFIG:Release>:-O3 -DNDEBUG -Wall>
 )
 
 # copy video files to bin folder

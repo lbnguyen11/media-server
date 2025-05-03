@@ -2,6 +2,15 @@
 #include <boost/asio.hpp>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
+#include <functional>
+#include <memory>
+#include <thread>
+#include <vector>
+#include <chrono>
+#include <future>
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 #include "server.hpp"
 
 namespace beast = boost::beast;
@@ -9,10 +18,44 @@ namespace http = beast::http;
 namespace net = boost::asio;
 using tcp = boost::asio::ip::tcp;
 
-void handle_request(beast::tcp_stream& stream, const std::string& media_path) {
+// Report a failure
+void
+fail(beast::error_code ec, char const* what)
+{
+    std::cerr << what << ": " << ec.message() << "\n";
+}
+
+template<bool isRequest, typename Body>
+struct fmt::formatter<http::message<isRequest,Body>> {
+    constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin()) {
+        return ctx.end();
+    }
+
+    template <typename FormatContext>
+    auto format(const http::message<isRequest,Body>& input, FormatContext& ctx) -> decltype(ctx.out()) {
+        auto c = input.base();
+        auto out = ctx.out();
+		const std::string s[2] {"response:", "request:"};
+        fmt::format_to(out, "{}\n", s[isRequest]);
+        for (auto it = c.begin(); it != c.end(); ++it) {
+            out = fmt::format_to(out, "{}{:<30}{}\n", std::string(35,' '), it->name_string(), it->value());
+		}
+		if constexpr (isRequest)
+			out = fmt::format_to(out, "{}Method: {}",      std::string(34,' '), input.method());
+		else
+			out = fmt::format_to(out, "{}Result: {} ({})", std::string(34,' '), input.result(), static_cast<int>(input.result()));
+        return out;
+    }
+};
+
+void handle_request(beast::tcp_stream& stream, const std::string& media_path, beast::error_code ec) {
+    spdlog::info("::handle_request");
     beast::flat_buffer buffer;
     http::request<http::string_body> req;
     http::read(stream, buffer, req);
+
+    spdlog::info("{}{}", std::string(2,' '), req);
+    // spdlog::info("{:{}}{}", 1, req);
 
     if (req.method() != http::verb::get) {
         http::response<http::string_body> res{http::status::bad_request, req.version()};
@@ -33,6 +76,7 @@ void handle_request(beast::tcp_stream& stream, const std::string& media_path) {
     }
 
     std::streamsize file_size = file.tellg();
+	spdlog::info("file_size:{:>20}", file_size);
     file.seekg(0);
 
     std::streamsize start = 0, end = file_size - 1;
@@ -54,6 +98,8 @@ void handle_request(beast::tcp_stream& stream, const std::string& media_path) {
 
     std::streamsize length = end - start + 1;
     std::string body(length, '\0');
+	spdlog::info("start    :{:>20}", start);
+	spdlog::info("length   :{:>20}", length);
     file.seekg(start);
     file.read(&body[0], length);
 
@@ -67,19 +113,96 @@ void handle_request(beast::tcp_stream& stream, const std::string& media_path) {
     res.body() = std::move(body);
     res.prepare_payload();
 
-    http::write(stream, res);
+	spdlog::info("{}{}", std::string(2,' '), res);
+	spdlog::info("ready to write!!");
+    auto written = http::write(stream, res, ec);
+	spdlog::info("written  :{:>20}", written);
+    // http::async_write(
+    //     stream, res,
+    //     [](boost::system::error_code ec, std::size_t bytes_transferred) {
+    //         std::cout << "CALLBACK:\n: " << std::endl;
+    //         if (ec == boost::asio::error::broken_pipe ||
+    //             ec == boost::asio::error::connection_reset ||
+    //             ec == boost::asio::error::connection_aborted) {
+                
+    //             std::cout << "Client disconnected: " << ec.message() << std::endl;
+    //             return;
+    //         } else if (ec) {
+    //             std::cout << "Error writing response: " << ec.message() << std::endl;
+    //             // Handle error
+    //             return;
+    //         }
+    //         else {
+    //             std::cout << "Sent: " << bytes_transferred << std::endl;
+    //         }
+            
+    //         // Success case handling here
+    //     });
+    // std::cout << "async_write:\n";
+}
+
+// Handles an HTTP server connection
+void
+do_session(
+    tcp::socket& socket,
+    const std::string& media_path)
+{
+    spdlog::debug("Start new session!!!");
+    bool close = false;
+    beast::error_code ec;
+    beast::tcp_stream stream(std::move(socket));
+
+    for(;;)
+    {
+        // Read a request and Send a reponse
+        handle_request(stream, media_path, ec);
+        if(ec)
+            return fail(ec, "write");
+        if(close)
+        {
+            // This means we should close the connection, usually because
+            // the response indicated the "Connection: close" semantic.
+            std::cout << "connection is closed!!!\n";
+            break;
+        }
+    }
+
+    // Send a TCP shutdown
+    socket.shutdown(tcp::socket::shutdown_send, ec);
+
+    // At this point the connection is closed gracefully
 }
 
 void run_server(const std::string& address, int port, const std::string& media_path) {
     net::io_context ioc{1};
+    spdlog::info("Serving {} on http://{}:{}", media_path, address,port);
+
+    // The acceptor receives incoming connections
     tcp::acceptor acceptor{ioc, {net::ip::make_address(address), static_cast<unsigned short>(port)}};
 
-    std::cout << "Serving " << media_path << " on http://" << address << ":" << port << std::endl;
+	std::vector<std::future<void>> v;
 
-    while (true) {
-        tcp::socket socket = acceptor.accept();
-        beast::tcp_stream stream(std::move(socket));
-        handle_request(stream, media_path);
-        stream.socket().shutdown(tcp::socket::shutdown_send);
+    for(;;)
+    {
+        // This will receive the new connection
+        tcp::socket socket{ioc};
+
+        // Block until we get a connection
+        acceptor.accept(socket);
+
+        // Launch the session, transferring ownership of the socket
+        // std::thread{std::bind(
+        //     &do_session,
+        //     std::move(socket),
+        //     media_path)}.detach();
+        auto fut = std::async(std::launch::async, std::bind(&do_session,std::move(socket),media_path));
+		v.push_back(std::move(fut));
+		spdlog::debug("v.size(): {}", v.size());
+
+		using namespace std::chrono_literals;
+		for (auto& f : v)
+		{
+			if (f.wait_for(1ms) == std::future_status::ready);
+		}
     }
 }
