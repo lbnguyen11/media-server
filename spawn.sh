@@ -19,6 +19,6 @@ shopt -s extdebug # necessary for the DEBUG trap to carry into functions
 
 for i in $(seq 1 20);
 do
-  firefox --private http://0.0.0.0:8080/sample.mp4 &
-  sleep 1
+  # firefox --private http://0.0.0.0:8080/sample.mp4 &
+    opera   --private http://0.0.0.0:8080/sample.mp4 &
 done

@@ -113,7 +113,7 @@ struct fmt::formatter<http::message<isRequest, Body>>
       out = fmt::format_to(out, "{}{:<30}{}\n", std::string(35, ' '), it->name_string(), it->value());
     }
     if constexpr (isRequest)
-      out = fmt::format_to(out, "{}Method: {}", std::string(34, ' '), input.method());
+      out = fmt::format_to(out, "{}Method: {} for {}", std::string(34, ' '), input.method(), input.target());
     else
       out = fmt::format_to(out, "{}Result: {} ({})", std::string(34, ' '), input.result(), static_cast<int>(input.result()));
     return out;
@@ -460,6 +460,7 @@ class http_session : public std::enable_shared_from_this<http_session>
               &http_session::on_write,
               self_.shared_from_this(),
               msg_.need_eof()));
+
         }
       };
 
@@ -587,6 +588,7 @@ private:
   void
     do_close()
   {
+    spdlog::debug("http_session::do_close()");
     // Send a TCP shutdown
     beast::error_code ec;
     stream_.socket().shutdown(tcp::socket::shutdown_send, ec);
@@ -600,6 +602,7 @@ private:
 void
 listener::do_accept()
 {
+  spdlog::debug("listener::do_accept()");
   // The new connection gets its own strand
   acceptor_.async_accept(
     net::make_strand(ioc_),

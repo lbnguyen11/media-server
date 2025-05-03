@@ -27,5 +27,5 @@ RELEASE_DIR=build/Release/bin
 RELEASE_BIN=file_server
 echo "[INFO](BEG) Run Release build!"
 cd ${RELEASE_DIR} || exit
-./${RELEASE_BIN} "$@" 2>&1
+./${RELEASE_BIN} "$@" # | tee /home/lgb1hc/lbn11/31-media-server/log/tmp.log
 echo "[INFO](END) Run Release build!"
