@@ -25,6 +25,41 @@ fail(beast::error_code ec, char const* what)
     std::cerr << what << ": " << ec.message() << "\n";
 }
 
+// This is the C++11 equivalent of a generic lambda.
+// The function object is used to send an HTTP message.
+template<class Stream>
+struct send_lambda
+{
+    Stream& stream_;
+    bool& close_;
+    beast::error_code& ec_;
+
+    explicit
+    send_lambda(
+        Stream& stream,
+        bool& close,
+        beast::error_code& ec)
+        : stream_(stream)
+        , close_(close)
+        , ec_(ec)
+    {
+    }
+
+    template<bool isRequest, class Body, class Fields>
+    auto
+    operator()(http::message<isRequest, Body, Fields>& msg) const
+    {
+        // Determine if we should close the connection after
+        close_ = msg.need_eof();
+
+        // We need the serializer here because the serializer requires
+        // a non-const file_body, and the message oriented version of
+        // http::write only works with const messages.
+        //http::serializer<isRequest, Body, Fields> sr{msg};
+        return http::write(stream_, msg, ec_);
+    }
+};
+
 template<bool isRequest, typename Body>
 struct fmt::formatter<http::message<isRequest,Body>> {
     constexpr auto parse(format_parse_context& ctx) -> decltype(ctx.begin()) {
@@ -32,7 +67,7 @@ struct fmt::formatter<http::message<isRequest,Body>> {
     }
 
     template <typename FormatContext>
-    auto format(const http::message<isRequest,Body>& input, FormatContext& ctx) -> decltype(ctx.out()) {
+    constexpr auto format(const http::message<isRequest,Body>& input, FormatContext& ctx) -> decltype(ctx.out()) {
         auto c = input.base();
         auto out = ctx.out();
 		const std::string s[2] {"response:", "request:"};
@@ -48,7 +83,8 @@ struct fmt::formatter<http::message<isRequest,Body>> {
     }
 };
 
-void handle_request(beast::tcp_stream& stream, const std::string& media_path, beast::error_code ec) {
+void handle_request(tcp::socket& stream, const std::string& media_path,
+                    send_lambda<tcp::socket>& send, beast::error_code ec) {
     spdlog::info("::handle_request");
     beast::flat_buffer buffer;
     http::request<http::string_body> req;
@@ -62,7 +98,8 @@ void handle_request(beast::tcp_stream& stream, const std::string& media_path, be
         res.set(http::field::content_type, "text/plain");
         res.body() = "Only GET supported";
         res.prepare_payload();
-        http::write(stream, res);
+        //http::write(stream, res);
+		send(res);
         return;
     }
 
@@ -71,7 +108,8 @@ void handle_request(beast::tcp_stream& stream, const std::string& media_path, be
         http::response<http::string_body> res{http::status::not_found, req.version()};
         res.body() = "File not found";
         res.prepare_payload();
-        http::write(stream, res);
+        // http::write(stream, res);
+		send(res);
         return;
     }
 
@@ -114,8 +152,14 @@ void handle_request(beast::tcp_stream& stream, const std::string& media_path, be
     res.prepare_payload();
 
 	spdlog::info("{}{}", std::string(2,' '), res);
+	if (start*2 > file_size)
+	{
+		spdlog::info("start*2 > file_size => throw");
+		throw std::exception();
+	}
 	spdlog::info("ready to write!!");
-    auto written = http::write(stream, res, ec);
+    // auto written = http::write(stream, res, ec);
+	auto written = send(res);
 	spdlog::info("written  :{:>20}", written);
     // http::async_write(
     //     stream, res,
@@ -150,12 +194,15 @@ do_session(
     spdlog::debug("Start new session!!!");
     bool close = false;
     beast::error_code ec;
-    beast::tcp_stream stream(std::move(socket));
+    // tcp::socket stream(std::move(socket));
+	tcp::socket& stream = socket;
 
+    // This lambda is used to send messages
+    send_lambda<tcp::socket> lambda{socket, close, ec};
     for(;;)
     {
         // Read a request and Send a reponse
-        handle_request(stream, media_path, ec);
+        handle_request(stream, media_path, lambda, ec);
         if(ec)
             return fail(ec, "write");
         if(close)
@@ -202,7 +249,7 @@ void run_server(const std::string& address, int port, const std::string& media_p
 		using namespace std::chrono_literals;
 		for (auto& f : v)
 		{
-			if (f.wait_for(1ms) == std::future_status::ready);
+			if (f.valid() && f.wait_for(1ms) == std::future_status::ready) f.get();
 		}
     }
 }
