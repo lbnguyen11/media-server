@@ -60,7 +60,6 @@ int main(int argc, char* argv[])
       t.join();
 
     return EXIT_SUCCESS;
-    //run_server("0.0.0.0", 8080, "sample.mp4");
   }
   catch (const std::exception& e)
   {

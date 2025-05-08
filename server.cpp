@@ -391,7 +391,7 @@ class http_session : public std::enable_shared_from_this<http_session>
     enum
     {
       // Maximum number of responses we will queue
-      limit = 512
+      limit = 16
     };
 
     // The type-erased, saved work item
@@ -427,6 +427,7 @@ class http_session : public std::enable_shared_from_this<http_session>
       BOOST_ASSERT(!items_.empty());
       auto const was_full = is_full();
       items_.erase(items_.begin());
+      spdlog::debug("pending works of\t\t\t{}: {}/{}", static_cast<void*>(&self_), items_.size(), limit);
       if (!items_.empty())
         (*items_.front())();
       return was_full;
@@ -460,13 +461,13 @@ class http_session : public std::enable_shared_from_this<http_session>
               &http_session::on_write,
               self_.shared_from_this(),
               msg_.need_eof()));
-
         }
       };
 
       // Allocate and store the work
       items_.push_back(
         boost::make_unique<work_impl>(self_, std::move(msg)));
+      spdlog::debug("pending works of\t\t\t{}: {}/{}", static_cast<void*>(&self_), items_.size(), limit);
 
       // If there was no previous work, start this one
       if (items_.size() == 1)
@@ -490,6 +491,7 @@ public:
     std::shared_ptr<std::string const> const& doc_root)
     : stream_(std::move(socket)), doc_root_(doc_root), queue_(*this)
   {
+    spdlog::debug("http_session::http_session() for\t {}", static_cast<void*>(this));
   }
 
   // Start the session
@@ -588,7 +590,7 @@ private:
   void
     do_close()
   {
-    spdlog::debug("http_session::do_close()");
+    spdlog::debug("http_session::do_close() for\t {}", static_cast<void*>(this));
     // Send a TCP shutdown
     beast::error_code ec;
     stream_.socket().shutdown(tcp::socket::shutdown_send, ec);
