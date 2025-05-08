@@ -1,2 +1,4 @@
 .vscode/
-video/
+build/
+log/
+.editorconfig

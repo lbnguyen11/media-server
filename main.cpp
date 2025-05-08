@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 {
   try
   {
-    spdlog::set_level(spdlog::level::trace);
+    spdlog::set_level(spdlog::level::debug);
     spdlog::set_pattern("%^[%D %T][%t][%L]%$ %v");
 
     // Check command line arguments.

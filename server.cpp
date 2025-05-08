@@ -1,4 +1,6 @@
+#include <future>
 #include "server.hpp"
+
 
 namespace beast = boost::beast;         // from <boost/beast.hpp>
 namespace http = beast::http;           // from <boost/beast/http.hpp>
@@ -120,6 +122,63 @@ struct fmt::formatter<http::message<isRequest, Body>>
   }
 };
 
+template <
+  class Body, class Allocator,
+  class Send>
+void serve_mjpeg_stream(
+  const http::request<Body, http::basic_fields<Allocator>>& req,
+  Send&& send)
+{
+  std::string boundary = "frame";
+  std::string gst_cmd =
+    "gst-launch-1.0 -q ximagesrc use-damage=0 ! "
+    "video/x-raw,framerate=120/1 ! videoconvert ! jpegenc ! "
+    "multipartmux boundary=" +
+    boundary + " ! filesink location=/dev/stdout";
+
+  FILE* pipe = popen(gst_cmd.c_str(), "r");
+  if (!pipe)
+  {
+    spdlog::debug("Failed to launch GStreamer MJPEG pipeline.");
+    return;
+  }
+
+  auto sendContinousJPEG = [pipe, boundary](beast::tcp_stream& stream)
+    {
+      static int cnt = 0;
+      constexpr int sz = 512 * 1024;
+      std::array<uint8_t, sz> buffer;
+      boost::system::error_code ec;
+      while (!feof(pipe))
+      {
+        // size_t len = fread(buffer, 1, sizeof(buffer), pipe);
+        size_t len = fread(buffer.data(), 1, buffer.size(), pipe);
+        if (len > 0)
+        {
+          //std::this_thread::sleep_for(std::chrono::milliseconds(5));
+          spdlog::trace("t1 {}", cnt);
+          net::write(stream, net::buffer(buffer), ec);
+          spdlog::trace("t2 {}", cnt++);
+          //std::this_thread::sleep_for(std::chrono::milliseconds(5));
+          if (ec)
+            break;
+        }
+      }
+
+      pclose(pipe);
+    };
+
+  // Send multipart MJPEG headers
+  http::response<http::empty_body> res{ http::status::ok, req.version() };
+  res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+  res.set(http::field::content_type, "multipart/x-mixed-replace; boundary=" + boundary);
+  res.set(http::field::cache_control, "no-cache");
+  res.keep_alive(true);
+  return send(std::move(res), std::move(sendContinousJPEG));
+
+}
+
+
 // This function produces an HTTP response for the given
 // request. The type of the response object depends on the
 // contents of the request, so the interface requires the
@@ -184,6 +243,12 @@ void handle_request(
     req.target()[0] != '/' ||
     req.target().find("..") != beast::string_view::npos)
     return send(bad_request("Illegal request-target"));
+
+
+  if (req.target() == "/stream")
+  {
+    serve_mjpeg_stream(req, send);
+  }
 
   // Build the path to the requested file
   std::string path = path_cat(doc_root, req.target());
@@ -265,7 +330,7 @@ void handle_request(
       "bytes " + std::to_string(start) + "-" + std::to_string(end) + "/" + std::to_string(file_size));
   res.body() = std::move(sbody);
   res.prepare_payload();
-  spdlog::info("{}{}", std::string(2, ' '), res);
+  // spdlog::info("{}{}", std::string(2, ' '), res);
   return send(std::move(res));
 }
 
@@ -433,27 +498,36 @@ class http_session : public std::enable_shared_from_this<http_session>
       return was_full;
     }
 
+    struct empty_job
+    {
+      void operator()(beast::tcp_stream&) {
+      }
+    };
+
     // Called by the HTTP handler to send a response.
-    template <bool isRequest, class Body, class Fields>
+    template <bool isRequest, class Body, class Fields, class Job = empty_job>
     void
-      operator()(http::message<isRequest, Body, Fields>&& msg)
+      operator()(http::message<isRequest, Body, Fields>&& msg, Job&& job = empty_job())
     {
       // This holds a work item
       struct work_impl : work
       {
         http_session& self_;
         http::message<isRequest, Body, Fields> msg_;
+        Job j;
 
         work_impl(
           http_session& self,
-          http::message<isRequest, Body, Fields>&& msg)
-          : self_(self), msg_(std::move(msg))
+          http::message<isRequest, Body, Fields>&& msg,
+          Job&& job)
+          : self_(self), msg_(std::move(msg)), j(std::move(job))
         {
         }
 
         void
           operator()()
         {
+          spdlog::info("{}{}", std::string(2, ' '), msg_);
           http::async_write(
             self_.stream_,
             msg_,
@@ -461,12 +535,16 @@ class http_session : public std::enable_shared_from_this<http_session>
               &http_session::on_write,
               self_.shared_from_this(),
               msg_.need_eof()));
+
+          auto fut = std::async(std::launch::async,
+                std::move(j), std::ref(self_.stream_));
+          //j(self_.stream_);
         }
       };
 
       // Allocate and store the work
       items_.push_back(
-        boost::make_unique<work_impl>(self_, std::move(msg)));
+        boost::make_unique<work_impl>(self_, std::move(msg), std::move(job)));
       spdlog::debug("pending works of\t\t\t{}: {}/{}", static_cast<void*>(&self_), items_.size(), limit);
 
       // If there was no previous work, start this one
