@@ -1,0 +1,138 @@
+\hypertarget{classhttp__session}{}\doxysection{http\+\_\+session Class Reference}
+\label{classhttp__session}\index{http\_session@{http\_session}}
+
+
+Inheritance diagram for http\+\_\+session\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{classhttp__session__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for http\+\_\+session\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhttp__session__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classhttp__session_1_1queue}{queue}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhttp__session_a5d141960a608b8e89ea396d47e5b4562}{http\+\_\+session}} (tcp\+::socket \&\&socket, std\+::shared\+\_\+ptr$<$ std\+::string const $>$ const \&doc\+\_\+root)
+\item 
+void \mbox{\hyperlink{classhttp__session_a20caca60d63c67b610bced145004cf9e}{run}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classhttp__session_a90863db5cee18f8d7e9d319de079090d}{do\+\_\+read}} ()
+\item 
+void \mbox{\hyperlink{classhttp__session_af038a60827738ebb64819a8dc81361eb}{on\+\_\+read}} (beast\+::error\+\_\+code ec, std\+::size\+\_\+t bytes\+\_\+transferred)
+\item 
+void \mbox{\hyperlink{classhttp__session_a2065eb74b7475e61239e2af405cc4958}{on\+\_\+write}} (bool close, beast\+::error\+\_\+code ec, std\+::size\+\_\+t bytes\+\_\+transferred)
+\item 
+void \mbox{\hyperlink{classhttp__session_ac27e08adec80df4c033516a1ef9f6f41}{do\+\_\+close}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+beast\+::tcp\+\_\+stream \mbox{\hyperlink{classhttp__session_a0835c750f211050d3844c43317800af8}{stream\+\_\+}}
+\item 
+beast\+::flat\+\_\+buffer \mbox{\hyperlink{classhttp__session_ae3b4614d9f2225e80c85226659ce4ce8}{buffer\+\_\+}}
+\item 
+std\+::shared\+\_\+ptr$<$ std\+::string const  $>$ \mbox{\hyperlink{classhttp__session_a336066822faae13cfbe358921f2a1536}{doc\+\_\+root\+\_\+}}
+\item 
+\mbox{\hyperlink{classhttp__session_1_1queue}{queue}} \mbox{\hyperlink{classhttp__session_ae26413c411bdefc20e14274589a6a076}{queue\+\_\+}}
+\item 
+boost\+::optional$<$ http\+::request\+\_\+parser$<$ http\+::string\+\_\+body $>$ $>$ \mbox{\hyperlink{classhttp__session_a3ff24a0663321add1fbf28c22050c725}{parser\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classhttp__session_a5d141960a608b8e89ea396d47e5b4562}\label{classhttp__session_a5d141960a608b8e89ea396d47e5b4562}} 
+\index{http\_session@{http\_session}!http\_session@{http\_session}}
+\index{http\_session@{http\_session}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{http\_session()}{http\_session()}}
+{\footnotesize\ttfamily http\+\_\+session\+::http\+\_\+session (\begin{DoxyParamCaption}\item[{tcp\+::socket \&\&}]{socket,  }\item[{std\+::shared\+\_\+ptr$<$ std\+::string const $>$ const \&}]{doc\+\_\+root }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhttp__session_ac27e08adec80df4c033516a1ef9f6f41}\label{classhttp__session_ac27e08adec80df4c033516a1ef9f6f41}} 
+\index{http\_session@{http\_session}!do\_close@{do\_close}}
+\index{do\_close@{do\_close}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{do\_close()}{do\_close()}}
+{\footnotesize\ttfamily void http\+\_\+session\+::do\+\_\+close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_a90863db5cee18f8d7e9d319de079090d}\label{classhttp__session_a90863db5cee18f8d7e9d319de079090d}} 
+\index{http\_session@{http\_session}!do\_read@{do\_read}}
+\index{do\_read@{do\_read}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{do\_read()}{do\_read()}}
+{\footnotesize\ttfamily void http\+\_\+session\+::do\+\_\+read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_af038a60827738ebb64819a8dc81361eb}\label{classhttp__session_af038a60827738ebb64819a8dc81361eb}} 
+\index{http\_session@{http\_session}!on\_read@{on\_read}}
+\index{on\_read@{on\_read}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{on\_read()}{on\_read()}}
+{\footnotesize\ttfamily void http\+\_\+session\+::on\+\_\+read (\begin{DoxyParamCaption}\item[{beast\+::error\+\_\+code}]{ec,  }\item[{std\+::size\+\_\+t}]{bytes\+\_\+transferred }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_a2065eb74b7475e61239e2af405cc4958}\label{classhttp__session_a2065eb74b7475e61239e2af405cc4958}} 
+\index{http\_session@{http\_session}!on\_write@{on\_write}}
+\index{on\_write@{on\_write}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{on\_write()}{on\_write()}}
+{\footnotesize\ttfamily void http\+\_\+session\+::on\+\_\+write (\begin{DoxyParamCaption}\item[{bool}]{close,  }\item[{beast\+::error\+\_\+code}]{ec,  }\item[{std\+::size\+\_\+t}]{bytes\+\_\+transferred }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_a20caca60d63c67b610bced145004cf9e}\label{classhttp__session_a20caca60d63c67b610bced145004cf9e}} 
+\index{http\_session@{http\_session}!run@{run}}
+\index{run@{run}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void http\+\_\+session\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classhttp__session_ae3b4614d9f2225e80c85226659ce4ce8}\label{classhttp__session_ae3b4614d9f2225e80c85226659ce4ce8}} 
+\index{http\_session@{http\_session}!buffer\_@{buffer\_}}
+\index{buffer\_@{buffer\_}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{buffer\_}{buffer\_}}
+{\footnotesize\ttfamily beast\+::flat\+\_\+buffer http\+\_\+session\+::buffer\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_a336066822faae13cfbe358921f2a1536}\label{classhttp__session_a336066822faae13cfbe358921f2a1536}} 
+\index{http\_session@{http\_session}!doc\_root\_@{doc\_root\_}}
+\index{doc\_root\_@{doc\_root\_}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{doc\_root\_}{doc\_root\_}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$std\+::string const$>$ http\+\_\+session\+::doc\+\_\+root\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_a3ff24a0663321add1fbf28c22050c725}\label{classhttp__session_a3ff24a0663321add1fbf28c22050c725}} 
+\index{http\_session@{http\_session}!parser\_@{parser\_}}
+\index{parser\_@{parser\_}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{parser\_}{parser\_}}
+{\footnotesize\ttfamily boost\+::optional$<$http\+::request\+\_\+parser$<$http\+::string\+\_\+body$>$ $>$ http\+\_\+session\+::parser\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_ae26413c411bdefc20e14274589a6a076}\label{classhttp__session_ae26413c411bdefc20e14274589a6a076}} 
+\index{http\_session@{http\_session}!queue\_@{queue\_}}
+\index{queue\_@{queue\_}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{queue\_}{queue\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classhttp__session_1_1queue}{queue}} http\+\_\+session\+::queue\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_a0835c750f211050d3844c43317800af8}\label{classhttp__session_a0835c750f211050d3844c43317800af8}} 
+\index{http\_session@{http\_session}!stream\_@{stream\_}}
+\index{stream\_@{stream\_}!http\_session@{http\_session}}
+\doxysubsubsection{\texorpdfstring{stream\_}{stream\_}}
+{\footnotesize\ttfamily beast\+::tcp\+\_\+stream http\+\_\+session\+::stream\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{server_8cpp}{server.\+cpp}}\end{DoxyCompactItemize}

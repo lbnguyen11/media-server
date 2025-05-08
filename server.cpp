@@ -129,8 +129,8 @@ void serve_mjpeg_stream(
   const http::request<Body, http::basic_fields<Allocator>>& req,
   Send&& send)
 {
-  std::string boundary = "frame";
-  std::string gst_cmd =
+  const std::string boundary = "frame";
+  const std::string gst_cmd =
     "gst-launch-1.0 -q ximagesrc use-damage=0 ! "
     "video/x-raw,framerate=120/1 ! videoconvert ! jpegenc ! "
     "multipartmux boundary=" +
@@ -143,7 +143,7 @@ void serve_mjpeg_stream(
     return;
   }
 
-  auto sendContinousJPEG = [pipe, boundary](beast::tcp_stream& stream)
+  auto sendContinousJPEG = [pipe](beast::tcp_stream& stream)
     {
       static int cnt = 0;
       constexpr int sz = 512 * 1024;
@@ -247,7 +247,7 @@ void handle_request(
 
   if (req.target() == "/stream")
   {
-    serve_mjpeg_stream(req, send);
+    return serve_mjpeg_stream(req, send);
   }
 
   // Build the path to the requested file

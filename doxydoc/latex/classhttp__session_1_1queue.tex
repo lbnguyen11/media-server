@@ -1,0 +1,107 @@
+\hypertarget{classhttp__session_1_1queue}{}\doxysection{http\+\_\+session\+::queue Class Reference}
+\label{classhttp__session_1_1queue}\index{http\_session::queue@{http\_session::queue}}
+
+
+Collaboration diagram for http\+\_\+session\+::queue\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhttp__session_1_1queue__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structhttp__session_1_1queue_1_1empty__job}{empty\+\_\+job}}
+\item 
+struct \mbox{\hyperlink{structhttp__session_1_1queue_1_1work}{work}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhttp__session_1_1queue_a0b3b78916e38f5a646173729e16b7755}{queue}} (\mbox{\hyperlink{classhttp__session}{http\+\_\+session}} \&self)
+\item 
+bool \mbox{\hyperlink{classhttp__session_1_1queue_ae8f53710b5aac99afc9a2a207e1b9710}{is\+\_\+full}} () const
+\item 
+bool \mbox{\hyperlink{classhttp__session_1_1queue_a294362790ce5c7d9744de5904e60beb5}{on\+\_\+write}} ()
+\item 
+{\footnotesize template$<$bool is\+Request, class Body , class Fields , class Job  = empty\+\_\+job$>$ }\\void \mbox{\hyperlink{classhttp__session_1_1queue_a6834845a5f6a9139efc3c0dd3848800a}{operator()}} (http\+::message$<$ is\+Request, Body, Fields $>$ \&\&msg, Job \&\&job=\mbox{\hyperlink{structhttp__session_1_1queue_1_1empty__job}{empty\+\_\+job}}())
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \mbox{\hyperlink{classhttp__session_1_1queue_a54e2c6f28b974672083fbabe6c6e256eac06c6d82d6b6d90539df9cd4cade960e}{limit}} = 16
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhttp__session}{http\+\_\+session}} \& \mbox{\hyperlink{classhttp__session_1_1queue_a03f067ae98ee34d9220dbd4c210ca401}{self\+\_\+}}
+\item 
+std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{structhttp__session_1_1queue_1_1work}{work}} $>$ $>$ \mbox{\hyperlink{classhttp__session_1_1queue_ac6e0d93f52c6a0770198e77b797369c4}{items\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classhttp__session_1_1queue_a54e2c6f28b974672083fbabe6c6e256e}\label{classhttp__session_1_1queue_a54e2c6f28b974672083fbabe6c6e256e}} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum\hspace{0.3cm}{\ttfamily [private]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{limit@{limit}!http\_session::queue@{http\_session::queue}}\index{http\_session::queue@{http\_session::queue}!limit@{limit}}}\mbox{\Hypertarget{classhttp__session_1_1queue_a54e2c6f28b974672083fbabe6c6e256eac06c6d82d6b6d90539df9cd4cade960e}\label{classhttp__session_1_1queue_a54e2c6f28b974672083fbabe6c6e256eac06c6d82d6b6d90539df9cd4cade960e}} 
+limit&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classhttp__session_1_1queue_a0b3b78916e38f5a646173729e16b7755}\label{classhttp__session_1_1queue_a0b3b78916e38f5a646173729e16b7755}} 
+\index{http\_session::queue@{http\_session::queue}!queue@{queue}}
+\index{queue@{queue}!http\_session::queue@{http\_session::queue}}
+\doxysubsubsection{\texorpdfstring{queue()}{queue()}}
+{\footnotesize\ttfamily http\+\_\+session\+::queue\+::queue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classhttp__session}{http\+\_\+session}} \&}]{self }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classhttp__session_1_1queue_ae8f53710b5aac99afc9a2a207e1b9710}\label{classhttp__session_1_1queue_ae8f53710b5aac99afc9a2a207e1b9710}} 
+\index{http\_session::queue@{http\_session::queue}!is\_full@{is\_full}}
+\index{is\_full@{is\_full}!http\_session::queue@{http\_session::queue}}
+\doxysubsubsection{\texorpdfstring{is\_full()}{is\_full()}}
+{\footnotesize\ttfamily bool http\+\_\+session\+::queue\+::is\+\_\+full (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classhttp__session_1_1queue_a294362790ce5c7d9744de5904e60beb5}\label{classhttp__session_1_1queue_a294362790ce5c7d9744de5904e60beb5}} 
+\index{http\_session::queue@{http\_session::queue}!on\_write@{on\_write}}
+\index{on\_write@{on\_write}!http\_session::queue@{http\_session::queue}}
+\doxysubsubsection{\texorpdfstring{on\_write()}{on\_write()}}
+{\footnotesize\ttfamily bool http\+\_\+session\+::queue\+::on\+\_\+write (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classhttp__session_1_1queue_a6834845a5f6a9139efc3c0dd3848800a}\label{classhttp__session_1_1queue_a6834845a5f6a9139efc3c0dd3848800a}} 
+\index{http\_session::queue@{http\_session::queue}!operator()@{operator()}}
+\index{operator()@{operator()}!http\_session::queue@{http\_session::queue}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$bool is\+Request, class Body , class Fields , class Job  = empty\+\_\+job$>$ \\
+void http\+\_\+session\+::queue\+::operator() (\begin{DoxyParamCaption}\item[{http\+::message$<$ is\+Request, Body, Fields $>$ \&\&}]{msg,  }\item[{Job \&\&}]{job = {\ttfamily \mbox{\hyperlink{structhttp__session_1_1queue_1_1empty__job}{empty\+\_\+job}}()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classhttp__session_1_1queue_ac6e0d93f52c6a0770198e77b797369c4}\label{classhttp__session_1_1queue_ac6e0d93f52c6a0770198e77b797369c4}} 
+\index{http\_session::queue@{http\_session::queue}!items\_@{items\_}}
+\index{items\_@{items\_}!http\_session::queue@{http\_session::queue}}
+\doxysubsubsection{\texorpdfstring{items\_}{items\_}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{structhttp__session_1_1queue_1_1work}{work}}$>$ $>$ http\+\_\+session\+::queue\+::items\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classhttp__session_1_1queue_a03f067ae98ee34d9220dbd4c210ca401}\label{classhttp__session_1_1queue_a03f067ae98ee34d9220dbd4c210ca401}} 
+\index{http\_session::queue@{http\_session::queue}!self\_@{self\_}}
+\index{self\_@{self\_}!http\_session::queue@{http\_session::queue}}
+\doxysubsubsection{\texorpdfstring{self\_}{self\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classhttp__session}{http\+\_\+session}}\& http\+\_\+session\+::queue\+::self\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{server_8cpp}{server.\+cpp}}\end{DoxyCompactItemize}

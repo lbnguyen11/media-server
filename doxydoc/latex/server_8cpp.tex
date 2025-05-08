@@ -1,0 +1,81 @@
+\hypertarget{server_8cpp}{}\doxysection{server.\+cpp File Reference}
+\label{server_8cpp}\index{server.cpp@{server.cpp}}
+{\ttfamily \#include $<$future$>$}\newline
+{\ttfamily \#include \char`\"{}server.\+hpp\char`\"{}}\newline
+Include dependency graph for server.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{server_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structfmt_1_1formatter_3_01http_1_1message_3_01isRequest_00_01Body_01_4_01_4}{fmt\+::formatter$<$ http\+::message$<$ is\+Request, Body $>$ $>$}}
+\item 
+class \mbox{\hyperlink{classwebsocket__session}{websocket\+\_\+session}}
+\item 
+class \mbox{\hyperlink{classhttp__session}{http\+\_\+session}}
+\item 
+class \mbox{\hyperlink{classhttp__session_1_1queue}{http\+\_\+session\+::queue}}
+\item 
+struct \mbox{\hyperlink{structhttp__session_1_1queue_1_1work}{http\+\_\+session\+::queue\+::work}}
+\item 
+struct \mbox{\hyperlink{structhttp__session_1_1queue_1_1empty__job}{http\+\_\+session\+::queue\+::empty\+\_\+job}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{server_8cpp_aacd32e7300ba1ea408f0cb79dbe33d86}{tcp}} = boost\+::asio\+::ip\+::tcp
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+beast\+::string\+\_\+view \mbox{\hyperlink{server_8cpp_a07721e7160dd07b31588340597dd57d0}{mime\+\_\+type}} (beast\+::string\+\_\+view path)
+\item 
+std\+::string \mbox{\hyperlink{server_8cpp_aaaccdbedbfc8f228761f2cfea8acadb6}{path\+\_\+cat}} (beast\+::string\+\_\+view base, beast\+::string\+\_\+view path)
+\item 
+{\footnotesize template$<$class Body , class Allocator , class Send $>$ }\\void \mbox{\hyperlink{server_8cpp_acff36f9ab0c698bcb9960a0c24433b90}{serve\+\_\+mjpeg\+\_\+stream}} (const http\+::request$<$ Body, http\+::basic\+\_\+fields$<$ Allocator $>$$>$ \&req, Send \&\&send)
+\item 
+{\footnotesize template$<$class Body , class Allocator , class Send $>$ }\\void \mbox{\hyperlink{server_8cpp_a20e61ef56a9b105e93ec362e2319c2fe}{handle\+\_\+request}} (beast\+::string\+\_\+view doc\+\_\+root, http\+::request$<$ Body, http\+::basic\+\_\+fields$<$ Allocator $>$$>$ \&\&req, Send \&\&send)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{server_8cpp_aacd32e7300ba1ea408f0cb79dbe33d86}\label{server_8cpp_aacd32e7300ba1ea408f0cb79dbe33d86}} 
+\index{server.cpp@{server.cpp}!tcp@{tcp}}
+\index{tcp@{tcp}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{tcp}{tcp}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{server_8cpp_aacd32e7300ba1ea408f0cb79dbe33d86}{tcp}} =  boost\+::asio\+::ip\+::tcp}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{server_8cpp_a20e61ef56a9b105e93ec362e2319c2fe}\label{server_8cpp_a20e61ef56a9b105e93ec362e2319c2fe}} 
+\index{server.cpp@{server.cpp}!handle\_request@{handle\_request}}
+\index{handle\_request@{handle\_request}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{handle\_request()}{handle\_request()}}
+{\footnotesize\ttfamily template$<$class Body , class Allocator , class Send $>$ \\
+void handle\+\_\+request (\begin{DoxyParamCaption}\item[{beast\+::string\+\_\+view}]{doc\+\_\+root,  }\item[{http\+::request$<$ Body, http\+::basic\+\_\+fields$<$ Allocator $>$$>$ \&\&}]{req,  }\item[{Send \&\&}]{send }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{server_8cpp_a07721e7160dd07b31588340597dd57d0}\label{server_8cpp_a07721e7160dd07b31588340597dd57d0}} 
+\index{server.cpp@{server.cpp}!mime\_type@{mime\_type}}
+\index{mime\_type@{mime\_type}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{mime\_type()}{mime\_type()}}
+{\footnotesize\ttfamily beast\+::string\+\_\+view mime\+\_\+type (\begin{DoxyParamCaption}\item[{beast\+::string\+\_\+view}]{path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{server_8cpp_aaaccdbedbfc8f228761f2cfea8acadb6}\label{server_8cpp_aaaccdbedbfc8f228761f2cfea8acadb6}} 
+\index{server.cpp@{server.cpp}!path\_cat@{path\_cat}}
+\index{path\_cat@{path\_cat}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{path\_cat()}{path\_cat()}}
+{\footnotesize\ttfamily std\+::string path\+\_\+cat (\begin{DoxyParamCaption}\item[{beast\+::string\+\_\+view}]{base,  }\item[{beast\+::string\+\_\+view}]{path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{server_8cpp_acff36f9ab0c698bcb9960a0c24433b90}\label{server_8cpp_acff36f9ab0c698bcb9960a0c24433b90}} 
+\index{server.cpp@{server.cpp}!serve\_mjpeg\_stream@{serve\_mjpeg\_stream}}
+\index{serve\_mjpeg\_stream@{serve\_mjpeg\_stream}!server.cpp@{server.cpp}}
+\doxysubsubsection{\texorpdfstring{serve\_mjpeg\_stream()}{serve\_mjpeg\_stream()}}
+{\footnotesize\ttfamily template$<$class Body , class Allocator , class Send $>$ \\
+void serve\+\_\+mjpeg\+\_\+stream (\begin{DoxyParamCaption}\item[{const http\+::request$<$ Body, http\+::basic\+\_\+fields$<$ Allocator $>$$>$ \&}]{req,  }\item[{Send \&\&}]{send }\end{DoxyParamCaption})}
+

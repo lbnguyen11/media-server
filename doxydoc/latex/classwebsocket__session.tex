@@ -1,0 +1,110 @@
+\hypertarget{classwebsocket__session}{}\doxysection{websocket\+\_\+session Class Reference}
+\label{classwebsocket__session}\index{websocket\_session@{websocket\_session}}
+
+
+Inheritance diagram for websocket\+\_\+session\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{classwebsocket__session__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for websocket\+\_\+session\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classwebsocket__session__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classwebsocket__session_a86996079157f81b70ebddf1f1d821b63}{websocket\+\_\+session}} (tcp\+::socket \&\&socket)
+\item 
+{\footnotesize template$<$class Body , class Allocator $>$ }\\void \mbox{\hyperlink{classwebsocket__session_a4dd1bcb8b93b826949b59dd8d33dfaa3}{do\+\_\+accept}} (http\+::request$<$ Body, http\+::basic\+\_\+fields$<$ Allocator $>$$>$ req)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classwebsocket__session_a48bccd5fd2fc5198b3bd380c66f33a5d}{on\+\_\+accept}} (beast\+::error\+\_\+code ec)
+\item 
+void \mbox{\hyperlink{classwebsocket__session_a630018bd8188d8cde95b1da09234ee60}{do\+\_\+read}} ()
+\item 
+void \mbox{\hyperlink{classwebsocket__session_afb7ac1ff941557d634e3c34daacac3d5}{on\+\_\+read}} (beast\+::error\+\_\+code ec, std\+::size\+\_\+t bytes\+\_\+transferred)
+\item 
+void \mbox{\hyperlink{classwebsocket__session_a2b277ff8b7a541e362f429c2158f4d14}{on\+\_\+write}} (beast\+::error\+\_\+code ec, std\+::size\+\_\+t bytes\+\_\+transferred)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+websocket\+::stream$<$ beast\+::tcp\+\_\+stream $>$ \mbox{\hyperlink{classwebsocket__session_a5ab0e283bd4bd164c5054ecfd119c36b}{ws\+\_\+}}
+\item 
+beast\+::flat\+\_\+buffer \mbox{\hyperlink{classwebsocket__session_a5d92edbfe72753fa10f08c0b8178dbce}{buffer\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classwebsocket__session_a86996079157f81b70ebddf1f1d821b63}\label{classwebsocket__session_a86996079157f81b70ebddf1f1d821b63}} 
+\index{websocket\_session@{websocket\_session}!websocket\_session@{websocket\_session}}
+\index{websocket\_session@{websocket\_session}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{websocket\_session()}{websocket\_session()}}
+{\footnotesize\ttfamily websocket\+\_\+session\+::websocket\+\_\+session (\begin{DoxyParamCaption}\item[{tcp\+::socket \&\&}]{socket }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classwebsocket__session_a4dd1bcb8b93b826949b59dd8d33dfaa3}\label{classwebsocket__session_a4dd1bcb8b93b826949b59dd8d33dfaa3}} 
+\index{websocket\_session@{websocket\_session}!do\_accept@{do\_accept}}
+\index{do\_accept@{do\_accept}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{do\_accept()}{do\_accept()}}
+{\footnotesize\ttfamily template$<$class Body , class Allocator $>$ \\
+void websocket\+\_\+session\+::do\+\_\+accept (\begin{DoxyParamCaption}\item[{http\+::request$<$ Body, http\+::basic\+\_\+fields$<$ Allocator $>$$>$}]{req }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classwebsocket__session_a630018bd8188d8cde95b1da09234ee60}\label{classwebsocket__session_a630018bd8188d8cde95b1da09234ee60}} 
+\index{websocket\_session@{websocket\_session}!do\_read@{do\_read}}
+\index{do\_read@{do\_read}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{do\_read()}{do\_read()}}
+{\footnotesize\ttfamily void websocket\+\_\+session\+::do\+\_\+read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classwebsocket__session_a48bccd5fd2fc5198b3bd380c66f33a5d}\label{classwebsocket__session_a48bccd5fd2fc5198b3bd380c66f33a5d}} 
+\index{websocket\_session@{websocket\_session}!on\_accept@{on\_accept}}
+\index{on\_accept@{on\_accept}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{on\_accept()}{on\_accept()}}
+{\footnotesize\ttfamily void websocket\+\_\+session\+::on\+\_\+accept (\begin{DoxyParamCaption}\item[{beast\+::error\+\_\+code}]{ec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classwebsocket__session_afb7ac1ff941557d634e3c34daacac3d5}\label{classwebsocket__session_afb7ac1ff941557d634e3c34daacac3d5}} 
+\index{websocket\_session@{websocket\_session}!on\_read@{on\_read}}
+\index{on\_read@{on\_read}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{on\_read()}{on\_read()}}
+{\footnotesize\ttfamily void websocket\+\_\+session\+::on\+\_\+read (\begin{DoxyParamCaption}\item[{beast\+::error\+\_\+code}]{ec,  }\item[{std\+::size\+\_\+t}]{bytes\+\_\+transferred }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classwebsocket__session_a2b277ff8b7a541e362f429c2158f4d14}\label{classwebsocket__session_a2b277ff8b7a541e362f429c2158f4d14}} 
+\index{websocket\_session@{websocket\_session}!on\_write@{on\_write}}
+\index{on\_write@{on\_write}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{on\_write()}{on\_write()}}
+{\footnotesize\ttfamily void websocket\+\_\+session\+::on\+\_\+write (\begin{DoxyParamCaption}\item[{beast\+::error\+\_\+code}]{ec,  }\item[{std\+::size\+\_\+t}]{bytes\+\_\+transferred }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classwebsocket__session_a5d92edbfe72753fa10f08c0b8178dbce}\label{classwebsocket__session_a5d92edbfe72753fa10f08c0b8178dbce}} 
+\index{websocket\_session@{websocket\_session}!buffer\_@{buffer\_}}
+\index{buffer\_@{buffer\_}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{buffer\_}{buffer\_}}
+{\footnotesize\ttfamily beast\+::flat\+\_\+buffer websocket\+\_\+session\+::buffer\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classwebsocket__session_a5ab0e283bd4bd164c5054ecfd119c36b}\label{classwebsocket__session_a5ab0e283bd4bd164c5054ecfd119c36b}} 
+\index{websocket\_session@{websocket\_session}!ws\_@{ws\_}}
+\index{ws\_@{ws\_}!websocket\_session@{websocket\_session}}
+\doxysubsubsection{\texorpdfstring{ws\_}{ws\_}}
+{\footnotesize\ttfamily websocket\+::stream$<$beast\+::tcp\+\_\+stream$>$ websocket\+\_\+session\+::ws\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{server_8cpp}{server.\+cpp}}\end{DoxyCompactItemize}

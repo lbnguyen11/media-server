@@ -1,0 +1,114 @@
+\hypertarget{classlistener}{}\doxysection{listener Class Reference}
+\label{classlistener}\index{listener@{listener}}
+
+
+{\ttfamily \#include $<$server.\+hpp$>$}
+
+
+
+Inheritance diagram for listener\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{classlistener__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for listener\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classlistener__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classlistener_a6741f5a2872de90629fc83be10519c48}{listener}} (net\+::io\+\_\+context \&ioc, tcp\+::endpoint endpoint, std\+::shared\+\_\+ptr$<$ std\+::string const $>$ const \&doc\+\_\+root)
+\item 
+void \mbox{\hyperlink{classlistener_a921c32a2d77e49ce3adc1dcf5545612e}{run}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classlistener_a6535b26e8b5c58d2c31961817df98c66}{do\+\_\+accept}} ()
+\item 
+void \mbox{\hyperlink{classlistener_a5c258678a46cb9226e9e92e01cdcffb2}{on\+\_\+accept}} (beast\+::error\+\_\+code ec, tcp\+::socket socket)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+net\+::io\+\_\+context \& \mbox{\hyperlink{classlistener_ac57027c93ce762f66202918f9eec0b9d}{ioc\+\_\+}}
+\item 
+tcp\+::acceptor \mbox{\hyperlink{classlistener_a0e54ef471efde5e51e9742477859e41d}{acceptor\+\_\+}}
+\item 
+std\+::shared\+\_\+ptr$<$ std\+::string const  $>$ \mbox{\hyperlink{classlistener_abf53631352df4375a04ac2c97cf21e00}{doc\+\_\+root\+\_\+}}
+\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classlistener_a09688c78952f7fe95ce5eedd939db5ec}{connections}} \{0\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classlistener_a6741f5a2872de90629fc83be10519c48}\label{classlistener_a6741f5a2872de90629fc83be10519c48}} 
+\index{listener@{listener}!listener@{listener}}
+\index{listener@{listener}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{listener()}{listener()}}
+{\footnotesize\ttfamily listener\+::listener (\begin{DoxyParamCaption}\item[{net\+::io\+\_\+context \&}]{ioc,  }\item[{tcp\+::endpoint}]{endpoint,  }\item[{std\+::shared\+\_\+ptr$<$ std\+::string const $>$ const \&}]{doc\+\_\+root }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classlistener_a6535b26e8b5c58d2c31961817df98c66}\label{classlistener_a6535b26e8b5c58d2c31961817df98c66}} 
+\index{listener@{listener}!do\_accept@{do\_accept}}
+\index{do\_accept@{do\_accept}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{do\_accept()}{do\_accept()}}
+{\footnotesize\ttfamily void listener\+::do\+\_\+accept (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classlistener_a5c258678a46cb9226e9e92e01cdcffb2}\label{classlistener_a5c258678a46cb9226e9e92e01cdcffb2}} 
+\index{listener@{listener}!on\_accept@{on\_accept}}
+\index{on\_accept@{on\_accept}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{on\_accept()}{on\_accept()}}
+{\footnotesize\ttfamily void listener\+::on\+\_\+accept (\begin{DoxyParamCaption}\item[{beast\+::error\+\_\+code}]{ec,  }\item[{tcp\+::socket}]{socket }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classlistener_a921c32a2d77e49ce3adc1dcf5545612e}\label{classlistener_a921c32a2d77e49ce3adc1dcf5545612e}} 
+\index{listener@{listener}!run@{run}}
+\index{run@{run}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void listener\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classlistener_a0e54ef471efde5e51e9742477859e41d}\label{classlistener_a0e54ef471efde5e51e9742477859e41d}} 
+\index{listener@{listener}!acceptor\_@{acceptor\_}}
+\index{acceptor\_@{acceptor\_}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{acceptor\_}{acceptor\_}}
+{\footnotesize\ttfamily tcp\+::acceptor listener\+::acceptor\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classlistener_a09688c78952f7fe95ce5eedd939db5ec}\label{classlistener_a09688c78952f7fe95ce5eedd939db5ec}} 
+\index{listener@{listener}!connections@{connections}}
+\index{connections@{connections}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{connections}{connections}}
+{\footnotesize\ttfamily std\+::uint32\+\_\+t listener\+::connections \{0\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classlistener_abf53631352df4375a04ac2c97cf21e00}\label{classlistener_abf53631352df4375a04ac2c97cf21e00}} 
+\index{listener@{listener}!doc\_root\_@{doc\_root\_}}
+\index{doc\_root\_@{doc\_root\_}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{doc\_root\_}{doc\_root\_}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$std\+::string const$>$ listener\+::doc\+\_\+root\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classlistener_ac57027c93ce762f66202918f9eec0b9d}\label{classlistener_ac57027c93ce762f66202918f9eec0b9d}} 
+\index{listener@{listener}!ioc\_@{ioc\_}}
+\index{ioc\_@{ioc\_}!listener@{listener}}
+\doxysubsubsection{\texorpdfstring{ioc\_}{ioc\_}}
+{\footnotesize\ttfamily net\+::io\+\_\+context\& listener\+::ioc\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{server_8hpp}{server.\+hpp}}\item 
+\mbox{\hyperlink{server_8cpp}{server.\+cpp}}\end{DoxyCompactItemize}
