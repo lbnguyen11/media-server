@@ -54,8 +54,8 @@ firefox http://localhost:8080/stream
 ```
 
 ## Demo
-
-media-server.webm
+[
+media-server.webm](https://github.com/lbnguyen11/media-server/blob/main/media-server.webm)
 
 ## Design overview
 
