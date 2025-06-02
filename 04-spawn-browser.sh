@@ -17,7 +17,8 @@ shopt -s extdebug # necessary for the DEBUG trap to carry into functions
 # BASH_XTRACEFD=3
 # set -x
 
-for i in $(seq 1 20);
+LOOP=${1:-20}
+for i in $(seq 1 "${LOOP}");
 do
   firefox --private http://0.0.0.0:8080/openning.mp4 > /dev/null 2>&1 &
   # sleep 1
