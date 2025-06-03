@@ -12,14 +12,18 @@ A multi-thread & high-performance media server written in C++, using Boost.Beast
 ## Dependencies
 
 * OS: Linux
-* Boost library (at least 1.71) for asynchronous HTTP/WebSocket
+* Boost library (at least 1.74) for asynchronous HTTP/WebSocket
 * Gstreamer library for screen capture
+* Spdlog for feature-rich formatting
 
 ## Installing dependencies
 
+* sudo add-apt-repository ppa:mhier/libboost-latest
 * sudo apt update
-* sudo apt install libboost-dev
+* sudo apt install libboost1.74-dev
+* cat /usr/include/boost/version.hpp | grep "BOOST_LIB_VERSION" //this should output: #define BOOST_LIB_VERSION "1_74"
 * sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+* sudo apt install libspdlog-dev
 
 ## Instructions
 

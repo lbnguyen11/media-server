@@ -18,7 +18,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Find libraries
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost 1.74 REQUIRED)
 find_package(spdlog REQUIRED)
 
 # Add executable
@@ -28,7 +28,7 @@ add_executable(file_server
 )
 
 # Link Boost
-target_link_libraries(file_server PRIVATE Boost::system Boost::thread)
+# target_link_libraries(file_server PRIVATE Boost::system Boost::thread)
 target_link_libraries(file_server PRIVATE spdlog::spdlog_header_only)
 
 # Set compile options
